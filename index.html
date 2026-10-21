@@ -1,10 +1,95 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11172B"><title>MISSION POSSIBLE｜賽會任務中心</title><link rel="stylesheet" href="./assets/css/style.css"></head>
-<body><main class="shell"><header class="topbar"><div class="brand">🎮 <span>MISSION <strong>POSSIBLE</strong></span></div><span class="chip">ARCADE EDITION · V2</span></header>
-<section id="setup" class="panel"><p class="kicker">PLAYER LOGIN</p><h1>賽會任務中心</h1><p class="muted">四大任務 · 三階段不可回溯 · 80分最終揭曉</p><label>隊伍代碼<input id="team" maxlength="30" placeholder="例如：第03組" autocomplete="off"></label><button id="start" class="primary">START GAME →</button><p class="small">成績儲存在這台手機。請使用同一台裝置完成四關，勿清除瀏覽器資料。</p></section>
-<section id="lobby" class="hidden"><div class="row"><div><p class="kicker">LEVEL SELECT</p><h1>任務選擇</h1><p id="teamName" class="muted"></p></div><span class="chip">🔒 RESULTS SEALED</span></div><div id="missionList" class="mission-grid"></div><div id="revealArea" class="panel hidden"><p class="kicker">FINAL REVEAL</p><h2>四關已完成！</h2><label>主持人揭曉碼<input id="revealCode" placeholder="等待主持人公布" autocomplete="off"></label><button id="revealSubmit">UNLOCK RESULTS</button><p id="revealError" class="error"></p></div><div class="row"><button id="export" class="secondary">⬇ 匯出成績 JSON</button><button id="finaleButton" class="secondary hidden">🏆 查看結局</button></div><button id="reset" class="text-btn">清除本機資料（慎用）</button></section>
-<section id="unlock" class="panel hidden"><p class="kicker">LEVEL LOCKED 🔒</p><h1 id="unlockTitle"></h1><p class="muted">等待主持人宣布開始，輸入當關通行碼後進入任務。</p><label>ACCESS CODE<input id="passcode" placeholder="輸入主持人通行碼" autocomplete="off" autocapitalize="characters"></label><button id="unlockSubmit">UNLOCK LEVEL →</button><p id="unlockError" class="error"></p></section>
-<section id="game" class="hidden"><div class="row"><span id="stageLabel" class="kicker"></span><span class="chip">NO BACKTRACK</span></div><div class="progress"><div id="stageProgress"></div></div><div class="panel"><p class="kicker">⚡ INCOMING MISSION</p><h1 id="gameTitle"></h1><p id="story" class="story"></p><div id="choices" class="choices"></div><p id="gameError" class="error"></p><p class="small">請先與隊友討論。選擇後會進入確認畫面；正式鎖定後不可回溯。</p></div></section>
-<section id="confirm" class="panel hidden"><p class="kicker">⚠ DECISION CHECK</p><h1>確定鎖定這個決策？</h1><p id="confirmText" class="story"></p><p class="small">確認後不能回到上一階段修改。</p><div class="row"><button id="confirmNo" class="secondary">再討論一下</button><button id="confirmYes" class="primary">LOCK IN ✓</button></div></section>
-<section id="sealed" class="panel center hidden"><div class="giant">🏁</div><p class="kicker">MISSION CLEAR!</p><h1 id="sealedTitle"></h1><div class="sealed">🔒 RESULT SEALED</div><p id="sealedHint" class="muted"></p><button id="sealedBack">返回關卡大廳</button></section>
-<section id="finale" class="panel hidden"><p class="kicker">🏆 RESULT UNLOCKED</p><h1>FINAL SCORE</h1><div id="totalScore" class="score"></div><div id="finaleList"></div><button id="finaleBack">返回任務大廳</button></section>
-<footer>活動情境演練 · 純前端版本 · 無即時跨裝置同步 · 緊急事件依現場指揮與119指示</footer></main><script type="module" src="./assets/js/main.js"></script></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#11172B">
+    <title>MISSION POSSIBLE｜賽會任務中心</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <main class="shell">
+        <header class="topbar">
+            <div class="brand">🎮 <span>MISSION <strong>POSSIBLE</strong></span></div><span class="chip">ARCADE EDITION
+                · V2</span>
+        </header>
+        <section id="setup" class="panel">
+            <p class="kicker">PLAYER LOGIN</p>
+            <h1>賽會任務中心</h1>
+            <p class="muted">四大任務 · 三階段不可回溯 · 80分最終揭曉</p><label>隊伍代碼<input id="team" maxlength="30"
+                    placeholder="例如：第03組" autocomplete="off"></label><button id="start" class="primary">START GAME
+                →</button>
+            <p class="small">成績儲存在這台手機。請使用同一台裝置完成四關，勿清除瀏覽器資料。</p>
+        </section>
+        <section id="lobby" class="hidden">
+            <div class="row">
+                <div>
+                    <p class="kicker">LEVEL SELECT</p>
+                    <h1>任務選擇</h1>
+                    <p id="teamName" class="muted"></p>
+                </div><span class="chip">🔒 RESULTS SEALED</span>
+            </div>
+            <div id="missionList" class="mission-grid"></div>
+            <div id="revealArea" class="panel hidden">
+                <p class="kicker">FINAL REVEAL</p>
+                <h2>四關已完成！</h2><label>主持人揭曉碼<input id="revealCode" placeholder="等待主持人公布"
+                        autocomplete="off"></label><button id="revealSubmit">UNLOCK RESULTS</button>
+                <p id="revealError" class="error"></p>
+            </div>
+            <div class="row"><button id="export" class="secondary">⬇ 匯出成績 JSON</button><button id="finaleButton"
+                    class="secondary hidden">🏆 查看結局</button></div><button id="reset"
+                class="text-btn">清除本機資料（慎用）</button>
+        </section>
+        <section id="unlock" class="panel hidden">
+            <p class="kicker">LEVEL LOCKED 🔒</p>
+            <h1 id="unlockTitle"></h1>
+            <p class="muted">等待主持人宣布開始，輸入當關通行碼後進入任務。</p><label>ACCESS CODE<input id="passcode" placeholder="輸入主持人通行碼"
+                    autocomplete="off" autocapitalize="characters"></label><button id="unlockSubmit">UNLOCK LEVEL
+                →</button>
+            <p id="unlockError" class="error"></p>
+        </section>
+        <section id="game" class="hidden">
+            <div class="row"><span id="stageLabel" class="kicker"></span><span class="chip">NO BACKTRACK</span></div>
+            <div class="progress">
+                <div id="stageProgress"></div>
+            </div>
+            <div class="panel">
+                <p class="kicker">⚡ INCOMING MISSION</p>
+                <h1 id="gameTitle"></h1>
+                <p id="story" class="story"></p>
+                <div id="choices" class="choices"></div>
+                <p id="gameError" class="error"></p>
+                <p class="small">請先與隊友討論。選擇後會進入確認畫面；正式鎖定後不可回溯。</p>
+            </div>
+        </section>
+        <section id="confirm" class="panel hidden">
+            <p class="kicker">⚠ DECISION CHECK</p>
+            <h1>確定鎖定這個決策？</h1>
+            <p id="confirmText" class="story"></p>
+            <p class="small">確認後不能回到上一階段修改。</p>
+            <div class="row"><button id="confirmNo" class="secondary">再討論一下</button><button id="confirmYes"
+                    class="primary">LOCK IN ✓</button></div>
+        </section>
+        <section id="sealed" class="panel center hidden">
+            <div class="giant">🏁</div>
+            <p class="kicker">MISSION CLEAR!</p>
+            <h1 id="sealedTitle"></h1>
+            <div class="sealed">🔒 RESULT SEALED</div>
+            <p id="sealedHint" class="muted"></p><button id="sealedBack">返回關卡大廳</button>
+        </section>
+        <section id="finale" class="panel hidden">
+            <p class="kicker">🏆 RESULT UNLOCKED</p>
+            <h1>FINAL SCORE</h1>
+            <div id="totalScore" class="score"></div>
+            <div id="finaleList"></div><button id="finaleBack">返回任務大廳</button>
+        </section>
+        <footer>活動情境演練 · 純前端版本 · 無即時跨裝置同步 · 緊急事件依現場指揮與119指示</footer>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="./assets/js/main.js"></script>
+    <script src="./assets/js/block.js?v=2"></script>
+</body>
+
+</html>
