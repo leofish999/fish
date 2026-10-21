@@ -49,12 +49,36 @@ $('sealedBack').onclick = lobby;
 $('export').onclick = () => exportData(state);
 $('revealSubmit').onclick = () => { if ($('revealCode').value.trim().toUpperCase() !== CONFIG.revealCode.toUpperCase()) { $('revealError').textContent = '揭曉碼不正確'; return } state.revealed = true; persist(); finale() };
 $('finaleButton').onclick = finale;
+var rank=[{
+    S:["神級調度員","資訊查證、即時通報與現場協調一氣呵成！你讓失聯的B車重新回到賽事節奏。"],
+    A:["可靠的接駁夥伴","你掌握了大部分關鍵資訊，並完成必要協調。再提升確認效率，就更接近完美！"],
+    B:["還在尋找B車","你努力處理問題，但部分資訊與通報時機仍有改善空間。記得先確認，再行動。"],
+    C:["B車去哪裡了？","現場資訊逐漸失控。下次先穩住聯絡管道、確認車輛位置，並及時向主管求援。"]
+},{
+    S:["門禁守護神","親切接待與安全查證兼顧！你守住選手村的安全，也照顧了訪客的感受。"],
+    A:["值得信賴的接待員","你重視身分查證，也能適時尋求支援。只要交接再完整一些，就更穩健了！"],
+    B:["熱心但需要確認","你的服務熱忱值得肯定，但門禁規範不能憑直覺判斷。多一道查證，少一分風險。"],
+    C:["房卡不是裝飾品","善意不能取代身分查證！遇到無法確認的訪客，應守住門禁並交由授權人員處理。"]
+},{
+    S:["餐飲危機化解大師","你沒有憑國籍猜測飲食需求，而是主動確認、協調供餐，讓選手獲得妥善照顧。"],
+    A:["貼心的餐飲協調員","你理解飲食差異，也願意積極尋找方案。若能更快確認供餐資訊，表現會更完整。"],
+    B:["好心也要問清楚","你試著解決問題，但部分替代方案尚未查證。尊重需求的第一步，是先詢問本人。"],
+    C:["這道菜真的能吃嗎？","飲食禁忌與過敏風險不能靠猜測。先確認需求、聯絡供餐窗口，再提供可靠資訊。"]
+},{S:["危機應變守護者","你知道何時立即求援、如何維護安全，也懂得與夥伴合作。即使一度僵住，仍能完成關鍵任務！"],
+    A:["沉著的現場協助者","你掌握了主要應變方向，並願意配合團隊。再加強求援時機與交接，就更周全了。"],
+    B:["緊張也能找到方向","突發事故讓人慌張很正常。記得先確保自身安全、啟動119，並請夥伴協助。"],
+    C:["先求援，不必逞英雄","志工不需要獨自解決所有危機。保護自己、通報專業人員、確實交接，才是重要的責任。"]}]
 function finale() {
     show('finale'); const total = Object.values(state.results).reduce((s, r) => s + r.score, 0); $('totalScore').textContent = `${total} / 80`;
     $('finaleList').replaceChildren(); missions.forEach(m => {
         const r = state.results[m.id], el = document.createElement('article'); el.className = 'result-row';
-        const title = document.createElement('h3'); title.textContent = `LEVEL 0${m.id} · ${r.grade}級 · ${r.score}/20`;
-        const ending = document.createElement('p'); ending.textContent = r.hiddenEnding || r.regularEnding; el.append(title, ending); $('finaleList').append(el)
+        const title = document.createElement('h2'); title.textContent = `LEVEL 0${m.id} · ${r.grade}級 · ${r.score}/20`;
+        const ending = document.createElement('h3'); 
+        const ending2 = document.createElement('p');
+        ending.textContent =rank[m.id-1][r.grade][0];
+        ending2.textContent =rank[m.id-1][r.grade][1];
+        //  r.hiddenEnding || r.regularEnding; 
+        el.append(title, ending,ending2); $('finaleList').append(el)
     })
 }
 $('finaleBack').onclick = lobby;
