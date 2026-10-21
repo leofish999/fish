@@ -8,12 +8,12 @@ function stop(){if(interval)clearInterval(interval);interval=null;deadline=null}
 function tick(){if(deadline===null)return;remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));update();if(remaining===0){stop();$('timerStatus').textContent='TIME UP · 停止作答，進入講解';}}
 function reset(){stop();remaining=CONFIG.missions[idx].minutes*60;update();$('timerStatus').textContent='等待主持人開始'}
 $('hostMission').replaceChildren();CONFIG.missions.forEach((m,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`LEVEL 0${m.id}｜${m.minutes}分鐘`;$('hostMission').append(o)});
-$('hostMission').onchange=e=>{idx=Number(e.target.value);reset()};
-$('timerStart').onclick=()=>{if(interval||remaining===0)return;deadline=Date.now()+remaining*1000;interval=setInterval(tick,250);$('timerStatus').textContent='MISSION ACTIVE · 作答中'};
+$('hostMission').onchange=e=>{idx=Number(e.target.value);reset();$('password').textContent='通行碼即將公布'};
+$('timerStart').onclick=()=>{if(interval||remaining===0)return;deadline=Date.now()+remaining*1000;interval=setInterval(tick,250);$('timerStatus').textContent='MISSION ACTIVE · 作答中';$('password').textContent='通行碼:'+CONFIG.missions[idx].code};
 $('timerPause').onclick=()=>{if(interval){tick();stop();$('timerStatus').textContent='PAUSED · 講解或臨時中止'}};
 $('timerEnd').onclick=()=>{stop();remaining=0;update();$('timerStatus').textContent='MISSION CLOSED · 講解中'};
 $('timerReset').onclick=()=>{if(confirm('確定重設本關倒數？'))reset()};reset();
-$('codes').replaceChildren();CONFIG.missions.forEach(m=>{const p=document.createElement('p');p.textContent=`LEVEL 0${m.id}｜${m.code}`;$('codes').append(p)});const p=document.createElement('p');p.textContent=`最終揭曉｜${CONFIG.revealCode}`;$('codes').append(p);
+// $('codes').replaceChildren();CONFIG.missions.forEach(m=>{const p=document.createElement('p');p.textContent=`LEVEL 0${m.id}｜${m.code}`;$('codes').append(p)});const p=document.createElement('p');p.textContent=`最終揭曉｜${CONFIG.revealCode}`;$('codes').append(p);
 const records=new Map();
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function initMissions(){missions=await Promise.all([1,2,3,4].map(async n=>(await fetch(`./data/mission${n}.json`)).json()))}

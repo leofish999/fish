@@ -19,6 +19,7 @@
             <h1>主持人統一倒數</h1><label>選擇關卡<select id="hostMission"
                     style="padding:14px;background:#111a2e;color:white;border-radius:12px;border:1px solid #637193;width:100%"></select></label>
             <div id="timer" class="timer">10:00</div>
+            <div id="password" class="password">通行碼即將公布</div>
             <p id="timerStatus" class="muted center">等待主持人開始</p>
             <div class="host-grid">
                 <div><button id="timerStart">▶ 開始／繼續</button></div>
@@ -28,12 +29,12 @@
             </div>
             <p class="note">講解期間停止計時；每關開始前選擇新任務。這個倒數只顯示在主持人設備／投影，不會遠端鎖定學生手機。</p>
         </section>
-        <section class="panel">
+        <!-- <section class="panel">
             <p class="kicker">LEVEL ACCESS</p>
             <h2>主持人通行碼</h2>
             <div id="codes"></div>
             <p class="small">通行碼請在開關時才公布。要改碼請修改 assets/js/config.js；純前端代碼可被查看，僅供現場控場。</p>
-        </section>
+        </section> -->
         <section class="panel">
             <p class="kicker">FINAL LEADERBOARD</p>
             <h2>成績彙總（最後才公開）</h2><label>匯入隊長下載的 JSON 成績檔（可多選）<input id="files" type="file"
